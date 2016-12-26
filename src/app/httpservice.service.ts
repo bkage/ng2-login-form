@@ -8,7 +8,7 @@ export class HttpService{
   constructor(private http: Http) { }
   private userResponse;
   getUserList(callbackFn){
-     this.http.get('http://localhost:3000/users').map((response: Response) => response.json()).subscribe(callbackFn);
+     this.http.get('http://localhost:3000/app/').map((response: Response) => response.json().users).subscribe(callbackFn);
   }
 
 }

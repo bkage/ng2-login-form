@@ -1,6 +1,6 @@
 <form class="col-md-8 " (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
   <md-card class="app-input-section row" layout="column" layout-align="end end">
-
+    <p>{{formMessage}}</p> 
     <md-input placeholder="Username" name="username" [(ngModel)]="currentUser.username" class="col-md-12"></md-input>
 
     <md-input #password name="password" [(ngModel)]="currentUser.password" type="password" placeholder="Password" maxlength="50" class="col-md-12">
@@ -12,6 +12,9 @@
     <button md-raised-button color="primary" class="pull-right" style="margin:40px 0 0 0;" >Login</button>
 
   </md-card>
+  <div *ngIf="isLoggedIn">
+      <p>Login success!</p>
+  </div>
 </form>
 <div class="col-md-4">
   <h2>Users array:</h2>

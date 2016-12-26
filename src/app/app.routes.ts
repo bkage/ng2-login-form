@@ -1,10 +1,8 @@
-/**
- * Created by BernardKlatkaSquiz on 24/12/16.
- */
-
 import { RouterModule } from "@angular/router";
 import {LoginformComponent} from "./loginform/loginform.component";
 import {PanelComponent} from './panel'
+import { UserLoginService } from './userlogin.service';
+
 export const AF_ROUTES = [
     {
       path: '',
@@ -12,7 +10,8 @@ export const AF_ROUTES = [
     },
     {
       path: 'panel',
-      component: PanelComponent
+      component: PanelComponent,
+      canActivate: [UserLoginService]
     }
 ];
 

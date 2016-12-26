@@ -1,18 +1,20 @@
 {
-  "users" : [
-    {
-      "id" : 1,
-      "username" : "admin",
-      "password" : "admin",
-      "email" : "admin@admin.com",
-      "access" : 0
-    },
-    {
-      "id" : 2,
-      "username" : "user1",
-      "password" : "pass1",
-      "email" : "user1@users.com",
-      "access" : 1
-    }
-  ]
+  "app": {
+      "users": [
+        {
+          "id" : 1,
+          "username" : "admin",
+          "password" : "35CD4154DA7A334B90304BD6A714997F",
+          "email" : "admin@admin.com",
+          "access" : 0
+        },
+        {
+          "id" : 2,
+          "username" : "user1",
+          "password" : "77E2CF628B60817D0873FBA5F266C44C",
+          "email" : "user1@users.com",
+          "access" : 1
+        }
+      ]
+  }
 }

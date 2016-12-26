@@ -1,41 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { SessionStorage } from 'angular2-localstorage/WebStorage';
+import { Router } from '@angular/router';
+
 
 //dev defined
 import {User} from "./user";
 import {HttpService} from "../httpservice.service";
+import { UserLoginService } from '../userlogin.service';
 
 @Component({
   selector: 'af-loginform',
   templateUrl: './loginform.component.html',
-  providers: [HttpService]
+  providers: [HttpService, UserLoginService]
 })
 export class LoginformComponent implements OnInit {
+
   onSubmit(form){
-    let checkForUsername = this.usersArray.filter((user) => {
+    //search for username in DB
+    let userFromDB = this.usersArray.find((user) => {
         return user.username === this.currentUser.username;
     });
-    if(checkForUsername.length > 0){ //if username exist in DB
-        //check for pass1
-        if(checkForUsername[0].password === this.currentUser.getPassword()){
-            console.log('LogIn: Username and password correct');
+    if(typeof userFromDB !== 'undefined'){ //if username exist in DB
+        //create temp user that wish to log in
+        let userToLogIn: User = new User(userFromDB.username, userFromDB.password, userFromDB.email);
+        //check for pass and set session vars
+        if(this.loginService.logIn(this.currentUser, userToLogIn)){
+            console.log('logedin');
+            this.formMessage = '';
+            this.router.navigate(['panel']);
         }
         else{
-            console.log('LogIn Failed: Password incorrect');
+            this.formMessage = 'Wrong password';
         }
     }
     else{
-        console.log('LogIn Failed: No such user in database');
+        this.formMessage = 'No user with that username';
+        return false;
     }
   }
-
 
   private defaultUser: User = new User('', '', '');
   private currentUser: User;
   private usersArray: any;
+  private formMessage: string;
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private loginService: UserLoginService, private router: Router) {
     this.httpService.getUserList((data: any) => this.usersArray = data);
   }
 
