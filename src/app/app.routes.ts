@@ -5,7 +5,12 @@ import { Permission } from './userlogin.service';
 
 export const AF_ROUTES = [
     {
-      path: '',
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+      path: 'login',
       component: LoginformComponent
     },
     {
