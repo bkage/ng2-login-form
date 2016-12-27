@@ -14,8 +14,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a routerLink="/">Login form <span class="sr-only">(current)</span></a></li>
-        <li routerLinkActive="active"><a routerLink="/panel">User panel</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['/']">Login form <span class="sr-only">(current)</span></a></li>
+        <li routerLinkActive="active"><a [routerLink]="['panel']">User panel</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" (click)="logOut()">Logout</a></li>

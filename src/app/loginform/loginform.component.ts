@@ -43,6 +43,7 @@ export class LoginformComponent implements OnInit {
   private currentUser: User;
   private usersArray: any;
   private formMessage: string;
+  private isLoggedIn: boolean;
 
   constructor(private httpService: HttpService, private loginService: UserLoginService, private router: Router) {
     this.httpService.getUserList((data: any) => this.usersArray = data);
@@ -50,6 +51,7 @@ export class LoginformComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.defaultUser;
+    this.isLoggedIn = JSON.parse(sessionStorage.getItem('loggedKey'));
   }
 
 }

@@ -1,6 +1,6 @@
-<form class="col-md-8 " (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+<form class="col-md-12 " (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" *ngIf="!isLoggedIn">
   <md-card class="app-input-section row" layout="column" layout-align="end end">
-    <p>{{formMessage}}</p> 
+    <p>{{formMessage}}</p>
     <md-input placeholder="Username" name="username" [(ngModel)]="currentUser.username" class="col-md-12"></md-input>
 
     <md-input #password name="password" [(ngModel)]="currentUser.password" type="password" placeholder="Password" maxlength="50" class="col-md-12">
@@ -16,14 +16,6 @@
       <p>Login success!</p>
   </div>
 </form>
-<div class="col-md-4">
-  <h2>Users array:</h2>
-  <ul>
-    <li *ngFor="let user of usersArray">
-      <p><strong>ID:</strong> {{user.id}}</p>
-      <p><strong>Username:</strong>{{user.username}}</p>
-      <p><strong>Password:</strong>{{user.password}}</p>
-      <p><strong>Email:</strong>{{user.email}}</p>
-    </li>
-  </ul>
+<div class="col-md-12" *ngIf="isLoggedIn">
+  <h2>Hurray! You're logged in!</h2>
 </div>

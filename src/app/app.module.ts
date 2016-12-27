@@ -10,7 +10,7 @@ import { PanelComponent } from './panel/panel.component';
 
 import { ROUTER } from './app.routes';
 import { HeaderComponent } from './header/header.component';
-import { UserLoginService } from './userlogin.service';
+import { UserLoginService, Permission } from './userlogin.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { UserLoginService } from './userlogin.service';
     MaterialModule.forRoot(),
     ROUTER
   ],
-  providers: [UserLoginService],
+  providers: [UserLoginService, Permission],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
