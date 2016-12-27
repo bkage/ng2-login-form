@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import {Md5} from 'ts-md5/dist/md5';
 
@@ -7,10 +7,11 @@ import {Md5} from 'ts-md5/dist/md5';
 import { User } from './loginform/user';
 
 
-const SALT = "thisIsMySalt";
+export const SALT = "thisIsMySalt";
 @Injectable()
 export class UserLoginService {
     //simple temp salt for another layer of security
+    constructor(private router: Router){}
 
     logIn(userToLogIn: User, userInDB: User){
         //hash input password
@@ -19,31 +20,28 @@ export class UserLoginService {
 
         if(hashedPass.toUpperCase() == userInDB.getPassword().toUpperCase()){
             //password correct, login user to SessionStorage
-            //sessionStorage.setItem('loggedKey', Md5.hashStr(SALT).toString()); //generate md5 hash from current salt string
-            sessionStorage.setItem('loggedKey', 'true');
+            sessionStorage.setItem('loggedKey', Md5.hashStr(userToLogIn.username + SALT).toString()); //generate md5 hash from current salt string
             sessionStorage.setItem('username', userToLogIn.username);
-            console.log('Logged in!!');
-            console.log();
             return true;
         }
         else{
-            console.log('Wrong password');
             return false;
         }
     }
     logOut(){
+        //clear session
         sessionStorage.removeItem('loggedKey');
         sessionStorage.removeItem('username');
-        console.log('LoggedOut');
+
+        this.router.navigate(['login'])
     }
 
 
 }
-//class for canActivate method (protected links guard)
+//class for canActivate method (protected links)
 @Injectable()
 export class Permission implements CanActivate{
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | boolean{
-        //return (sessionStorage.getItem('loggedKey') !== null && sessionStorage.getItem('loggedKey') === Md5.hashStr(SALT).toString());
-        return sessionStorage.getItem('loggedKey') == 'true';
+        return sessionStorage.getItem('loggedKey') == Md5.hashStr(sessionStorage.getItem('username') + SALT).toString();
     }
 }

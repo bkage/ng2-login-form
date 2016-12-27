@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
+import {Md5} from 'ts-md5/dist/md5';
 
 
 //dev defined
 import {User} from "./user";
 import {HttpService} from "../httpservice.service";
-import { UserLoginService } from '../userlogin.service';
+import { UserLoginService, SALT } from '../userlogin.service';
 
 @Component({
   selector: 'af-loginform',
@@ -50,8 +51,18 @@ export class LoginformComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.currentUser = this.defaultUser;
-        this.isLoggedIn = JSON.parse(sessionStorage.getItem('loggedKey'));
+        if(sessionStorage.getItem('username') !== null && sessionStorage.getItem('loggedKey') !== null){
+            this.isLoggedIn = true;
+            this.currentUser = new User(sessionStorage.getItem('username'), '','');
+            this.formMessage = 'You are already logged in';
+        }
+        else{
+            this.isLoggedIn = false;
+            this.currentUser = this.defaultUser;
+            this.formMessage = '';
+        }
+
+
     }
 
 }

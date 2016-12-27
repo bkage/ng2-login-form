@@ -1,21 +1,17 @@
-<form class="col-md-12 " (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" *ngIf="!isLoggedIn">
+<form class="col-md-12 " (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
   <md-card class="app-input-section row" layout="column" layout-align="end end">
-    <p>{{formMessage}}</p>
-    <md-input placeholder="Username" name="username" [(ngModel)]="currentUser.username" class="col-md-12"></md-input>
 
-    <md-input #password name="password" [(ngModel)]="currentUser.password" type="password" placeholder="Password" maxlength="50" class="col-md-12">
+    <md-input [disabled]="isLoggedIn" placeholder="Username" name="username" [(ngModel)]="currentUser.username" class="col-md-12"></md-input>
+
+    <md-input  [disabled]="isLoggedIn" #password name="password" [(ngModel)]="currentUser.password" type="password" placeholder="Password" maxlength="50" class="col-md-12">
       <md-hint align="end">
         {{password.characterCount}} / 50
       </md-hint>
     </md-input>
 
-    <button md-raised-button color="primary" class="pull-right" style="margin:40px 0 0 0;" >Login</button>
+    <button [disabled]="isLoggedIn" md-raised-button color="primary" class="pull-right" style="margin:40px 0 0 0;" >Login</button>
 
   </md-card>
-  <div *ngIf="isLoggedIn">
-      <p>Login success!</p>
-  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="formMessage.length > 0"><p>{{formMessage}}</p></div>
 </form>
-<div class="col-md-12" *ngIf="isLoggedIn">
-  <h2>Hurray! You're logged in!</h2>
-</div>
+ 

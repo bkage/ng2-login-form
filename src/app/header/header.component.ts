@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserLoginService } from '../userlogin.service';
+import { Router, Event, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'af-header',
   templateUrl: './header.component.html',
-  styles: [],
-  providers: [UserLoginService]
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+    private isLoggedIn: boolean = false;
+    private currentUser: string;
 
-  constructor(private userService: UserLoginService, private router: Router) { }
-
-  logOut(){
-      this.userService.logOut();
-      this.router.navigate(['login']);
-  }
-  ngOnInit() {
-  }
-
+    constructor(private router: Router) {
+        router.events.forEach((event: Event) => {
+            if(event instanceof NavigationStart) {
+                this.isLoggedIn = sessionStorage.getItem('loggedKey') !== null;
+                this.currentUser = sessionStorage.getItem('username');
+            }
+        });
+    }
 }

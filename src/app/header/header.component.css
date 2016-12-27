@@ -1,0 +1,9 @@
+.nav.navbar-nav.navbar-right{
+    display:flex;
+    height:50px;
+    -ms-align-items: center;
+    align-items: center;
+}
+p{
+    margin:0;
+}
